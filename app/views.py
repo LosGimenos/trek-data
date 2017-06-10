@@ -1,7 +1,15 @@
-from .models import User
-from flask import
+from .models import User, get_episodes, get_directors
+from flask import Flask, request, session, redirect, url_for, render_template, flash
 
-app = flask(__name__)
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    episodes = get_episodes()
+    directors = get_directors()
+
+    print(episodes)
+    return render_template('index.html', episodes=episodes, directors=directors)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -23,7 +31,7 @@ def register():
     return render_template('register.html')
 
 @app.route("/signin", methods=['GET', 'POST'])
-def login():
+def signin():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -35,5 +43,11 @@ def login():
             flash("Signed In")
             return redirect(url_for('index'))
 
-    return render_template('login.html')
+    return render_template('signin.html')
+
+@app.route("/signout", methods=['GET'])
+def logout():
+    session.pop('username', None)
+    flash('Signed Out')
+    return redirect(url_for('index'))
 

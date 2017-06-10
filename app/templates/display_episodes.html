@@ -1,0 +1,8 @@
+<ul class="posts">
+  {% for row in episodes %}
+    <li>
+      <b>{{ row.episode.name }}</b>
+  {% else %}
+    <li>There aren't any posts yet!
+  {% endfor %}
+</ul>
