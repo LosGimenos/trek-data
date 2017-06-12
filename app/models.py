@@ -1,8 +1,11 @@
 from py2neo import Graph, Node, Relationship
+# from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationship, ZeroOrOne)
+# from neoapi import SerializableStructuredNode, SerializableStructuredRel, DateTimeProperty
 from passlib.hash import bcrypt
 from datetime import datetime
 import os
 import uuid
+import jsonify
 
 url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
 username = os.environ.get('NEO4J_USERNAME')
@@ -33,12 +36,35 @@ class User:
         else:
             return False
 
+# class Episode(SerializableStructuredNode):
+#     __type__ = "episodes"
+
+#     type = StringProperty(default='episodes')
+#     id = StringProperty()
+#     name = StringProperty()
+
+
 def get_episodes():
     query = '''
-    MATCH(episode:Episode) RETURN episode
+    MATCH(episode:Episode) RETURN episode.name, episode.id
     '''
 
-    return graph.run(query)
+    results = graph.run(query).data()
+    nodes = []
+
+    for result in results:
+        nodes.append({"title": result['episode.name']})
+
+    json_nodes = jsonify(nodes)
+    print(json_nodes)
+    return json_nodes
+
+# def get_episodes():
+#     query = '''
+#     MATCH(episode:Episode) RETURN episode.name, episode.id
+#     '''
+
+#     return graph.run(query)
 
 def get_directors():
     query = '''

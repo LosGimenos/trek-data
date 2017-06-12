@@ -1,15 +1,19 @@
 from .models import User, get_episodes, get_directors
-from flask import Flask, request, session, redirect, url_for, render_template, flash
+from flask import Flask, request, session, redirect, url_for, render_template, flash, jsonify
+import json
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/trek_data/api/v1/info', methods=['GET'])
+def grab_data():
     episodes = get_episodes()
     directors = get_directors()
 
-    print(episodes)
-    return render_template('index.html', episodes=episodes, directors=directors)
+    return episodes
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

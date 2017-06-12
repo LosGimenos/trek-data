@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+
+<h2>Home</h2>
+  {% if session.username %}
+    <h3>Share New Post</h3>
+    <form action="{{ url_for('add_post') }}" method="post">
+        <dl>
+            <dt>Title:</dt>
+            <dd><input type="text" size="30" name="title"></dd>
+            <dt>Tags (separated by commas):</dt>
+            <dd><input type="text" size="30" name="tags"></dd>
+            <dt>Text:</dt>
+            <dd><textarea name="text" rows="5" cols="40"></textarea></dd>
+        </dl>
+        <input type="submit" value="Share">
+    </form>
+  {% endif %}
+
+<br>
+
+<h3>Episodes</h3>
+{% include "display_episodes.html" %}
+
+<h3>Directors</h3>
+{% include "display_directors.html" %}
+
+{% endblock %}

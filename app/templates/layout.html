@@ -1,6 +1,13 @@
-<!doctype html>
-<title>My Blogging Site</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>DATALORE</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
 <div class="page">
   <h1>TREK DATA</h1>
   <div class="metanav">
@@ -21,3 +28,7 @@
   {% endfor %}
   {% block body %}{% endblock %}
 </div>
+</body>
+<script type="text/javascript" href="{{ url_for('static', filename='js/bundle.js') }}"></script>
+
+</html>

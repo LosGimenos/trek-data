@@ -2,6 +2,7 @@
   {% for row in episodes %}
     <li>
       <b>{{ row.episode.name }}</b>
+      <p>{{ row.episode.id }}</p>
   {% else %}
     <li>There aren't any posts yet!
   {% endfor %}
